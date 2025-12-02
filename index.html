@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Habit Hero</title>
+</head>
+<body style="font-family: Arial; padding: 40px;">
+
+  <h1>Habit Hero</h1>
+  <p>Welcome! Please sign in with Google to continue.</p>
+
+  <button id="loginBtn">Sign in with Google</button>
+
+  <script type="module">
+    import { 
+      auth, 
+      GoogleAuthProvider, 
+      signInWithPopup,
+      onAuthStateChanged 
+    } from "./firebase-config.js";
+
+    const provider = new GoogleAuthProvider();
+    const loginBtn = document.getElementById("loginBtn");
+
+    loginBtn.addEventListener("click", async () => {
+      try {
+        await signInWithPopup(auth, provider);
+      } catch (error) {
+        console.error(error);
+      }
+    });
+
+    // Auto redirect if logged in
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        window.location.href = "secret.html";
+      }
+    });
+  </script>
+
+</body>
+</html>
